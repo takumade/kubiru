@@ -75,7 +75,7 @@ Query resource types
 - [ ] Pods
 - [ ] Volumes
 - [ ] Namespaces
-- [ ] Services
+- [x] Services
 
 Edit resource types
 - [ ] Deployments
