@@ -32,6 +32,7 @@ import { createCluster, updateCluster } from '@/repositories/clusterRepository';
 
 
 import { useSelector } from 'react-redux';
+import { Textarea } from '../ui/textarea';
 
 
 export const IMG_MAX_LIMIT = 3;
@@ -230,14 +231,17 @@ export const ClusterForm: React.FC<ClusterFormProps> = ({
               )}
             />
 
-<FormField
+
+          </div>
+
+          <FormField
               control={form.control}
               name="token"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Token</FormLabel>
                   <FormControl>
-                    <Input
+                    <Textarea
                       disabled={loading}
                       placeholder="Cluster token"
                       {...field}
@@ -247,7 +251,8 @@ export const ClusterForm: React.FC<ClusterFormProps> = ({
                 </FormItem>
               )}
             />
-          </div>
+
+            
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>

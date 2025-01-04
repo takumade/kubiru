@@ -5,6 +5,7 @@ import { Cluster, ClusterUpdate, NewCluster } from "@/database/entities";
 
 
 
+
 export async function getClusters() {
     let clusters = await db.selectFrom('cluster')
         .selectAll()
@@ -34,10 +35,16 @@ export async function createCluster(data: NewCluster) {
 
 export async function updateCluster(id: number, updateWith: ClusterUpdate) {
     console.log("Update cluster...")
-    return await db.updateTable('cluster')
-        .set(updateWith)
-        .where('id', '=', id).execute()
 
+    try{
+        let result:any =  await db.updateTable('cluster')
+            .set(updateWith)
+            .where('id', '=', id).execute()
+
+        return result[0].numUpdatedRows
+    }catch(err: any){
+        return err.message
+    }
 }
 
 

@@ -170,7 +170,7 @@ export const navItems: NavItem[] = [
   },
   {
     title: 'Services',
-    href: '/dashboard/services',
+    href: '/dashboard/resources/services',
     icon: 'services',
     label: 'services',
     isResource: true

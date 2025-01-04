@@ -33,6 +33,21 @@ export interface Cluster {
   token: string
 }
 
+export interface ServiceRaw {
+  metadata:any 
+  spec: any 
+  status: any
+}
+
+export interface Service {
+  name: string 
+  type: string
+  namespace: string
+  ports: string[]
+  clusterIP: string 
+}
+
+
 export type MainNavItem = NavItemWithOptionalChildren;
 
 export type SidebarNavItem = NavItemWithChildren;
