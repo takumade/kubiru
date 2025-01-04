@@ -25,19 +25,20 @@ export const ResourcesClient: React.FC<ResourceClientProps> = ({resource,  data 
 
   console.log("columns: ", getColumns(resource) as ColumnDef<any, unknown>[])
 
+  let resourceName = resource[0].toUpperCase() + resource.substring(1)
+
   return (
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Services (${data?.length})`}
+          title={`${resourceName} (${data?.length})`}
           description={`Manage ${resource} (Client side table functionalities.)`}
         />
         <Button
           className="text-xs md:text-sm"
           onClick={() => router.push(`/dashboard/resources/${resource}/new`)}
         >
-          <Plus className="mr-2 h-4 w-4" /> Add New {resource[0].toUpperCase()}{resource.substring(1)}
-        </Button>
+          <Plus className="mr-2 h-4 w-4" /> Add New {resourceName} </Button>
       </div>
       <Separator />
       <DataTable 
