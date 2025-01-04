@@ -72,7 +72,8 @@ microk8s kubectl create token default
 
 Query resource types
 - [ ] Deployments
-- [ ] Pods
+- [x] Pods
+- [x] Nodes
 - [ ] Volumes
 - [ ] Namespaces
 - [x] Services
