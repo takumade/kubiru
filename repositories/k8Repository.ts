@@ -40,7 +40,7 @@ async function getNamespacesFromCookies(){
 
 
 
-async function getResource(resource:string, api_type: string="api_v1" ) {
+export async function getResource(resource:string, api_type: string="api_v1" ) {
     let cluster: Cluster = await getClusterFromCookies()
     let namespace = await getNamespacesFromCookies()
 
