@@ -1,0 +1,47 @@
+import { ResourceItems, Service, ServiceRaw } from "@/types"
+
+function formatNodes(data: ResourceItems[] ){
+    return data.map((node:ResourceItems) => ({
+        name: node.metadata.name,
+        status: node?.status?.conditions[node.status.conditions.length - 1].type,
+        version: node?.status?.nodeInfo.kubeletVersion
+      }))
+}
+
+function formatPods(data: ResourceItems[]) {
+    return data.map((pod: ResourceItems) => ({
+        name: pod.metadata?.generateName,
+        namespace: pod.metadata?.namespace,
+        labels: pod.metadata?.labels.app,
+        kind: pod.metadata?.ownerReferences?.map((reference:any) => reference.kind),
+        status: pod.status?.phase,
+        hostIP: pod.status?.hostIP,
+        podIP: pod.status?.podIP,   
+        createdAt: pod.metadata?.creationTimestamp
+    }))
+}
+
+
+function formatServices(data: ResourceItems[]) {
+    return data.map((service: ResourceItems) => ({
+        name: service.metadata?.name,
+        namespace: service.metadata?.namespace,
+        type: service.spec?.type,
+        clusterIP: service.spec?.clusterIP, 
+        ports: service.spec?.ports.map((p:any) => p.port)
+    }))
+}
+
+
+export function formatData(resource:string, data:any){
+
+    if (resource == "services") return formatServices(data as ResourceItems[])
+    if (resource == "nodes") return formatNodes(data as ResourceItems[])
+    if (resource == "pods") return formatPods(data as ResourceItems[])
+    
+
+
+
+    return data
+
+}

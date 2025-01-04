@@ -39,6 +39,12 @@ export interface ServiceRaw {
   status: any
 }
 
+export interface ResourceItems {
+  metadata:any 
+  spec: any 
+  status: any
+}
+
 export interface Service {
   name: string 
   type: string

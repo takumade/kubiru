@@ -3,9 +3,9 @@ import { ColumnDef } from '@tanstack/react-table';
 
 import { Cluster } from '@/constants/data';
 import { Checkbox } from '@/components/ui/checkbox';
-import { CellAction } from './cell-action';
+// import { CellAction } from './cell-action';
 
-export const columns: ColumnDef<Cluster>[] = [
+export const ServiceColumns: ColumnDef<any>[] = [
   {
     id: 'select',
     header: ({ table }) => (
