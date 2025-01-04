@@ -2,7 +2,7 @@
 
 import { db } from "@/database";
 import { Cluster, ClusterUpdate, NewCluster } from "@/database/entities";
-import Error from "next/error";
+
 
 
 
