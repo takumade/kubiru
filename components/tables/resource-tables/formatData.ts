@@ -59,6 +59,7 @@ export function formatData(resource:string, data:any){
     if (resource == "nodes") return formatNodes(data as ResourceItems[])
     if (resource == "pods") return formatPods(data as ResourceItems[])
     if (resource == "deployments") return formatDeployments(data as ResourceItems[])
+    if (resource == "namespaces") return formatNamespaces(data as ResourceItems[])
 
     return data
 }
