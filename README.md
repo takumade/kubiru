@@ -75,7 +75,7 @@ Query resource types
 - [x] Pods
 - [x] Nodes
 - [ ] Volumes
-- [ ] Namespaces
+- [x] Namespaces
 - [x] Services
 
 Edit resource types
