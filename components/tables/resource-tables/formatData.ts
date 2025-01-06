@@ -21,6 +21,26 @@ function formatPods(data: ResourceItems[]) {
     }))
 }
 
+function formatDeployments(data: ResourceItems[]) {
+    return data.map((deployment: ResourceItems) => ({
+        name: deployment.metadata?.name,
+        namespace: deployment.metadata?.namespace,
+        labels: deployment.metadata?.labels?.app,
+        replicas: deployment.spec?.replicas,
+        strategy: deployment.spec?.strategy.type,
+        createdAt: deployment.metadata?.creationTimestamp
+    }))
+}
+
+function formatNamespaces(data: ResourceItems[]) {
+    return data.map((namespace: ResourceItems) => ({
+        uid: namespace.metadata?.uid,
+        name: namespace.metadata?.name,
+        status: namespace.status?.phase,
+        createdAt: namespace.metadata?.creationTimestamp
+    }))
+}
+
 
 function formatServices(data: ResourceItems[]) {
     return data.map((service: ResourceItems) => ({
@@ -38,10 +58,8 @@ export function formatData(resource:string, data:any){
     if (resource == "services") return formatServices(data as ResourceItems[])
     if (resource == "nodes") return formatNodes(data as ResourceItems[])
     if (resource == "pods") return formatPods(data as ResourceItems[])
-    
-
-
+    if (resource == "deployments") return formatDeployments(data as ResourceItems[])
+    if (resource == "namespaces") return formatNamespaces(data as ResourceItems[])
 
     return data
-
 }

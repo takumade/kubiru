@@ -50,14 +50,14 @@ export async function getResource(resource:string, api_type: string="api_v1" ) {
 
     let apiVersion = api_type
 
-    if (api_type === "api_v1") {
-        apiVersion = "api/v1"
-    }else if (api_type === "apps_v1") {
-    apiVersion = "apis/apps/v1"
+    if (api_type === "apps_v1" || resource === "deployments") {
+        apiVersion = "apis/apps/v1"
     } else if (api_type === "batch_v1") {
         apiVersion = "apis/batch/v1"
     } else if (api_type === "extensions_v1beta1") {
         apiVersion = "apis/extensions/v1beta1"
+    } else if (api_type === "api_v1") {
+        apiVersion = "api/v1"
     }
 
 
