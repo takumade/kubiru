@@ -21,6 +21,17 @@ function formatPods(data: ResourceItems[]) {
     }))
 }
 
+function formatDeployments(data: ResourceItems[]) {
+    return data.map((deployment: ResourceItems) => ({
+        name: deployment.metadata?.name,
+        namespace: deployment.metadata?.namespace,
+        labels: deployment.metadata?.labels.app,
+        replicas: deployment.spec?.replicas,
+        strategy: deployment.spec?.strategy.type,
+        createdAt: deployment.metadata?.creationTimestamp
+    }))
+}
+
 
 function formatServices(data: ResourceItems[]) {
     return data.map((service: ResourceItems) => ({
