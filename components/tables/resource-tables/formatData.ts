@@ -32,6 +32,15 @@ function formatDeployments(data: ResourceItems[]) {
     }))
 }
 
+function formatNamespaces(data: ResourceItems[]) {
+    return data.map((namespace: ResourceItems) => ({
+        uid: namespace.metadata?.uid,
+        name: namespace.metadata?.name,
+        status: namespace.status?.phase,
+        createdAt: namespace.metadata?.creationTimestamp
+    }))
+}
+
 
 function formatServices(data: ResourceItems[]) {
     return data.map((service: ResourceItems) => ({

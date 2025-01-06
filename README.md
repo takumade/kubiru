@@ -71,7 +71,7 @@ microk8s kubectl create token default
 ## Todo
 
 Query resource types
-- [ ] Deployments
+- [x] Deployments
 - [x] Pods
 - [x] Nodes
 - [ ] Volumes
