@@ -33,14 +33,14 @@ function formatDeployments(data: ResourceItems[]) {
 }
 
 function formatVolumes(data: ResourceItems[]) {
-    return data.map((deployment: ResourceItems) => ({
-        name: deployment.metadata?.name,
-        capacity: deployment.spec?.capacity?.storage,
-        type: deployment.spec?.hostPath?.type,
-        accessModes: deployment.spec?.accessModes?.storage,
-        volumeMode: deployment.spec?.volumeMode,
-        phase: deployment.status.phase,
-        createdAt: deployment.metadata?.creationTimestamp
+    return data.map((volume: ResourceItems) => ({
+        name: volume.metadata?.name,
+        capacity: volume.spec?.capacity?.storage,
+        type: volume.spec?.hostPath?.type,
+        accessModes: volume.spec?.accessModes?.storage,
+        volumeMode: volume.spec?.volumeMode,
+        phase: volume.status.phase,
+        createdAt: volume.metadata?.creationTimestamp
     }))
 }
 
@@ -72,6 +72,7 @@ export function formatData(resource:string, data:any){
     if (resource == "pods") return formatPods(data as ResourceItems[])
     if (resource == "deployments") return formatDeployments(data as ResourceItems[])
     if (resource == "namespaces") return formatNamespaces(data as ResourceItems[])
+    if (resource == "persistentvolumes") return formatVolumes(data as ResourceItems[])
 
     return data
 }
