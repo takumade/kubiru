@@ -37,7 +37,7 @@ function formatVolumes(data: ResourceItems[]) {
         name: volume.metadata?.name,
         capacity: volume.spec?.capacity?.storage,
         type: volume.spec?.hostPath?.type,
-        accessModes: volume.spec?.accessModes?.storage,
+        accessModes: volume.spec?.accessModes,
         volumeMode: volume.spec?.volumeMode,
         phase: volume.status?.phase,
         createdAt: volume.metadata?.creationTimestamp
