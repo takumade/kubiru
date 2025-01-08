@@ -211,7 +211,7 @@ export const navItems: NavItem[] = [
       },
       {
         title: 'Volumes',
-        href: '/dashboard/resources/volumes',
+        href: '/dashboard/resources/persistentvolumes',
         icon: 'user',
         label: 'volumes',
         isResource: true

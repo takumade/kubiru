@@ -32,6 +32,18 @@ function formatDeployments(data: ResourceItems[]) {
     }))
 }
 
+function formatVolumes(data: ResourceItems[]) {
+    return data.map((volume: ResourceItems) => ({
+        name: volume.metadata?.name,
+        capacity: volume.spec?.capacity?.storage,
+        type: volume.spec?.hostPath?.type,
+        accessModes: volume.spec?.accessModes,
+        volumeMode: volume.spec?.volumeMode,
+        phase: volume.status?.phase,
+        createdAt: volume.metadata?.creationTimestamp
+    }))
+}
+
 function formatNamespaces(data: ResourceItems[]) {
     return data.map((namespace: ResourceItems) => ({
         uid: namespace.metadata?.uid,
@@ -60,6 +72,7 @@ export function formatData(resource:string, data:any){
     if (resource == "pods") return formatPods(data as ResourceItems[])
     if (resource == "deployments") return formatDeployments(data as ResourceItems[])
     if (resource == "namespaces") return formatNamespaces(data as ResourceItems[])
+    if (resource == "persistentvolumes") return formatVolumes(data as ResourceItems[])
 
     return data
 }
