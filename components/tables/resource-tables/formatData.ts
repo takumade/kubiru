@@ -39,7 +39,7 @@ function formatVolumes(data: ResourceItems[]) {
         type: volume.spec?.hostPath?.type,
         accessModes: volume.spec?.accessModes?.storage,
         volumeMode: volume.spec?.volumeMode,
-        phase: volume.status.phase,
+        phase: volume.status?.phase,
         createdAt: volume.metadata?.creationTimestamp
     }))
 }
