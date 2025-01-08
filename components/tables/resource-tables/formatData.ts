@@ -32,6 +32,18 @@ function formatDeployments(data: ResourceItems[]) {
     }))
 }
 
+function formatVolumes(data: ResourceItems[]) {
+    return data.map((deployment: ResourceItems) => ({
+        name: deployment.metadata?.name,
+        capacity: deployment.spec?.capacity?.storage,
+        type: deployment.spec?.hostPath?.type,
+        accessModes: deployment.spec?.accessModes?.storage,
+        volumeMode: deployment.spec?.volumeMode,
+        phase: deployment.status.phase,
+        createdAt: deployment.metadata?.creationTimestamp
+    }))
+}
+
 function formatNamespaces(data: ResourceItems[]) {
     return data.map((namespace: ResourceItems) => ({
         uid: namespace.metadata?.uid,
