@@ -118,6 +118,7 @@ export function DashboardNav({
           ) :(
             item.href && (
               <NavItemSingle 
+                  key={index} 
                   index={index} 
                   item={item} 
                   path={path}
