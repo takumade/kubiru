@@ -46,9 +46,12 @@ export function ClusterSelector() {
 
   }
 
-  if (clusters.length == 0){
-   loadClusters()
-  }
+  
+  React.useEffect(()=> {
+    if (clusters.length == 0){
+      loadClusters()
+     }
+  }, [])
 
 
 
