@@ -1,7 +1,7 @@
 'use client';
 import { ColumnDef } from '@tanstack/react-table';
-import { Cluster } from '@/constants/data';
 import { Checkbox } from '@/components/ui/checkbox';
+import { CellAction } from '../cell-action';
 
 
 export const NodeColumns: ColumnDef<any>[] = [
@@ -36,8 +36,8 @@ export const NodeColumns: ColumnDef<any>[] = [
     accessorKey: 'version',
     header: 'VERSION'
   },
-//   {
-//     id: 'actions',
-//     cell: ({ row }) => <CellAction data={row.original} />
-//   }
+  {
+    id: 'actions',
+    cell: ({ row }) => <CellAction data={row.original} />
+  }
 ];
