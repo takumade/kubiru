@@ -40,8 +40,9 @@ async function getNamespacesFromCookies(){
 async function getRequestDetails(){
     let cluster: Cluster = await getClusterFromCookies()
     let namespace = await getNamespacesFromCookies()
-
     let headers = generateHeaders(cluster.token)
+
+    console.log("headers: ", headers)
 
     return {
         cluster,
@@ -50,19 +51,7 @@ async function getRequestDetails(){
     }
 }
 
-
-
-
-export async function getResource(resource:string, api_type: string="api_v1" ) {
-
-    const {
-        cluster,
-        namespace, 
-        headers
-    } = await getRequestDetails()
-
-    console.log("headers: ", headers)
-
+function getResourceAPIPath(resource:string, api_type: string="api_v1"){
     let apiVersion = api_type
 
     if (api_type === "apps_v1" || resource === "deployments") {
@@ -74,6 +63,20 @@ export async function getResource(resource:string, api_type: string="api_v1" ) {
     } else if (api_type === "api_v1") {
         apiVersion = "api/v1"
     }
+
+    return apiVersion
+}
+
+
+export async function getResource(resource:string, api_type: string="api_v1" ) {
+
+    const {
+        cluster,
+        namespace, 
+        headers
+    } = await getRequestDetails()
+
+    let apiVersion =  getResourceAPIPath(resource)
 
     let resourceUrl = `${cluster.api}/${apiVersion}/${resource}`
 
@@ -110,23 +113,11 @@ export async function getResourceDetails(resource:string, api_type: string="api_
         headers
     } = await getRequestDetails()
 
-
-    let apiVersion = api_type
-
-    if (api_type === "apps_v1" || resource === "deployments") {
-        apiVersion = "apis/apps/v1"
-    } else if (api_type === "batch_v1") {
-        apiVersion = "apis/batch/v1"
-    } else if (api_type === "extensions_v1beta1") {
-        apiVersion = "apis/extensions/v1beta1"
-    } else if (api_type === "api_v1") {
-        apiVersion = "api/v1"
-    }
-
+    let apiVersion =  getResourceAPIPath(resource)
     let resourceUrl = `${cluster.api}/${apiVersion}/${resource}`
 
     if (namespace) {
-        resourceUrl = `${cluster.api}/${apiVersion}/namespaces/${namespace}/${resource}`
+        resourceUrl = `${cluster.api}/${apiVersion}/namespaces/${namespace}/${resource}/${resource}`
     }
 
     console.log("Resource URLs: ", resourceUrl)
@@ -144,8 +135,8 @@ export async function getResourceDetails(resource:string, api_type: string="api_
 
     console.log("Data x: ", data)
 
-    if (data.items) {
-        return data.items
+    if (data) {
+        return data
     }
 
     return []
