@@ -37,17 +37,21 @@ async function getNamespacesFromCookies(){
     }
 
 
-
-
-
-export async function getResource(resource:string, api_type: string="api_v1" ) {
+async function getRequestDetails(){
     let cluster: Cluster = await getClusterFromCookies()
     let namespace = await getNamespacesFromCookies()
-
     let headers = generateHeaders(cluster.token)
 
     console.log("headers: ", headers)
 
+    return {
+        cluster,
+        namespace,
+        headers
+    }
+}
+
+function getResourceAPIPath(resource:string, api_type: string="api_v1"){
     let apiVersion = api_type
 
     if (api_type === "apps_v1" || resource === "deployments") {
@@ -60,8 +64,19 @@ export async function getResource(resource:string, api_type: string="api_v1" ) {
         apiVersion = "api/v1"
     }
 
+    return apiVersion
+}
 
 
+export async function getResource(resource:string, api_type: string="api_v1" ) {
+
+    const {
+        cluster,
+        namespace, 
+        headers
+    } = await getRequestDetails()
+
+    let apiVersion =  getResourceAPIPath(resource)
 
     let resourceUrl = `${cluster.api}/${apiVersion}/${resource}`
 
@@ -91,6 +106,42 @@ export async function getResource(resource:string, api_type: string="api_v1" ) {
     return []
 }
 
+export async function getResourceDetails(resource:string, api_type: string="api_v1" ) {
+    const {
+        cluster,
+        namespace, 
+        headers
+    } = await getRequestDetails()
+
+    let apiVersion =  getResourceAPIPath(resource)
+    let resourceUrl = `${cluster.api}/${apiVersion}/${resource}`
+
+    if (namespace) {
+        resourceUrl = `${cluster.api}/${apiVersion}/namespaces/${namespace}/${resource}/${resource}`
+    }
+
+    console.log("Resource URLs: ", resourceUrl)
+
+    let results = await fetch(resourceUrl, {
+        method: 'GET',
+        headers: headers,
+        agent: new https.Agent({
+            rejectUnauthorized: false,
+          })
+        
+    })
+
+    let data:any = await results.json()
+
+    console.log("Data x: ", data)
+
+    if (data) {
+        return data
+    }
+
+    return []
+}
+
 
 export async function setCurrentCluster(cluster: Cluster) {
     const headers = generateHeaders(cluster.token);
@@ -104,29 +155,5 @@ export async function setCurrentNamespace(namespace: string) {
 }
 
 
-export async function getNodes() {
-    return await getResource('nodes')
-}
-
-export async function getServices() {
-    return await getResource('services')
-}
-
-
-export async function getPods() {
-    return await getResource('pods')
-}
-
-export async function getDeployments() {
-    return await getResource('deployments',  'apps_v1')
-}
-
-export async function getNamespaces() {
-    return await getResource('namespaces')
-}
-
-export async function getVolumes() {
-    return await getResource('persistentvolumes')
-}
 
 

@@ -2,6 +2,7 @@ import { ResourceItems, Service, ServiceRaw } from "@/types"
 
 function formatNodes(data: ResourceItems[] ){
     return data.map((node:ResourceItems) => ({
+        original: node.metadata?.uid,
         name: node.metadata.name,
         status: node?.status?.conditions[node.status.conditions.length - 1].type,
         version: node?.status?.nodeInfo.kubeletVersion
@@ -10,7 +11,8 @@ function formatNodes(data: ResourceItems[] ){
 
 function formatPods(data: ResourceItems[]) {
     return data.map((pod: ResourceItems) => ({
-        name: pod.metadata?.generateName,
+        original: pod.metadata?.uid,
+        name: pod.metadata?.name,
         namespace: pod.metadata?.namespace,
         labels: pod.metadata?.labels.app,
         kind: pod.metadata?.ownerReferences?.map((reference:any) => reference.kind),
@@ -23,6 +25,7 @@ function formatPods(data: ResourceItems[]) {
 
 function formatDeployments(data: ResourceItems[]) {
     return data.map((deployment: ResourceItems) => ({
+        original: deployment.metadata?.uid,
         name: deployment.metadata?.name,
         namespace: deployment.metadata?.namespace,
         labels: deployment.metadata?.labels?.app,
@@ -34,6 +37,7 @@ function formatDeployments(data: ResourceItems[]) {
 
 function formatVolumes(data: ResourceItems[]) {
     return data.map((volume: ResourceItems) => ({
+        original: volume.metadata?.uid,
         name: volume.metadata?.name,
         capacity: volume.spec?.capacity?.storage,
         type: volume.spec?.hostPath?.type,
@@ -46,6 +50,7 @@ function formatVolumes(data: ResourceItems[]) {
 
 function formatNamespaces(data: ResourceItems[]) {
     return data.map((namespace: ResourceItems) => ({
+        original: namespace.metadata?.uid,
         uid: namespace.metadata?.uid,
         name: namespace.metadata?.name,
         status: namespace.status?.phase,
@@ -56,6 +61,7 @@ function formatNamespaces(data: ResourceItems[]) {
 
 function formatServices(data: ResourceItems[]) {
     return data.map((service: ResourceItems) => ({
+        original: service.metadata?.uid,
         name: service.metadata?.name,
         namespace: service.metadata?.namespace,
         type: service.spec?.type,

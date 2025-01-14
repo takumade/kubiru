@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: Cluster;
+  data: any;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -66,7 +66,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
           <DropdownMenuItem
-            onClick={() => router.push(`/dashboard/clusters/${data.id}`)}
+            onClick={() => router.push(`/dashboard/resources/${data.original}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
