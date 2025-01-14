@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: Cluster;
+  data: any;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
