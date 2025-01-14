@@ -12,7 +12,7 @@ function formatNodes(data: ResourceItems[] ){
 function formatPods(data: ResourceItems[]) {
     return data.map((pod: ResourceItems) => ({
         original: pod.metadata?.uid,
-        name: pod.metadata?.generateName,
+        name: pod.metadata?.name,
         namespace: pod.metadata?.namespace,
         labels: pod.metadata?.labels.app,
         kind: pod.metadata?.ownerReferences?.map((reference:any) => reference.kind),
