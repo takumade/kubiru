@@ -28,16 +28,10 @@ export const IMG_MAX_LIMIT = 3;
 const formSchema = z.object({
   name: z
     .string()
-    .min(3, { message: 'Cluster Name must be at least 3 characters' }),
-  api: z
+    .min(3, { message: 'Resource must be at least 3 characters' }),
+  manifest: z
     .string()
-    .min(3, { message: 'API must be at least 3 characters' }),
-  token: z
-    .string()
-    .min(3, { message: 'API Token must be at least 3 characters' }),    
-  description: z
-    .string()
-    .min(3, { message: 'Cluster description must be at least 3 characters' }),
+    .min(3, { message: 'Resource Manifest must be at least 3 characters' }),
 });
 
 type ResourceFormValues = z.infer<typeof formSchema>;
@@ -64,9 +58,9 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const title = initialData ? 'Edit cluster' : 'Create cluster';
-  const description = initialData ? 'Edit a cluster.' : 'Add a new cluster';
-  const toastMessage = initialData ? 'Cluster updated.' : 'Cluster created.';
+  const title = initialData ? 'Edit resource' : 'Create resource';
+  const description = initialData ? 'Edit a resource.' : 'Add a new resource';
+  const toastMessage = initialData ? 'Resource updated.' : 'Resource created.';
   const action = initialData ? 'Save changes' : 'Create';
 
   const form = useForm<ResourceFormValues>({
@@ -81,11 +75,11 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
     
 
       setLoading(true);
-      if (initialData?.resourceId === "new") {
-        let res = await createCluster(data)      
-      } else {
-        let res = await updateCluster(initialData?.resourceId as number, data)
-      }
+    //   if (initialData?.resourceId === "new") {
+    //     let res = await createCluster(data)      
+    //   } else {
+    //     let res = await updateCluster(initialData?.resourceId as number, data)
+    //   }
 
 
       router.refresh();
@@ -171,14 +165,14 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="api"
+              name="manifest"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>API</FormLabel>
+                  <FormLabel>Manifest</FormLabel>
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Cluster API"
+                      placeholder="Resource Manifest"
                       {...field}
                     />
                   </FormControl>
@@ -186,46 +180,10 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Cluster description"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
 
 
           </div>
-
-          <FormField
-              control={form.control}
-              name="token"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Token</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      disabled={loading}
-                      placeholder="Cluster token"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>
