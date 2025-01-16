@@ -2,7 +2,6 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import PageContainer from '@/components/layout/page-container';
 import { ResourcesClient } from '@/components/tables/resource-tables/client';
 import { getResource } from '@/repositories/k8Repository';
-import { Service, ServiceRaw } from '@/types';
 
 
 export default async function page({
