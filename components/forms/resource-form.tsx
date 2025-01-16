@@ -7,6 +7,10 @@ import { Trash } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+
+import CodeMirror from "@uiw/react-codemirror";
+import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+
 import {
   Form,
   FormControl,
@@ -38,7 +42,8 @@ type ResourceFormValues = z.infer<typeof formSchema>;
 
 interface ResourceFormProps {
   initialData: {
-    resourceId:  string
+    name:string
+    manifest:string
   } | null;
 }
 
@@ -47,11 +52,12 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
 }: ResourceFormProps) => {
 
 
-
-  console.log("Intial Data: ", initialData)
   const defaultValues = initialData
     ? initialData
-    : {};
+    : {
+        name: "",
+        manifest: ""
+    };
 
   const params = useParams();
   const router = useRouter();
@@ -87,7 +93,7 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
       toast({
         variant: 'success',
         title: 'Success',
-        description: initialData?.resourceId == "new" ? 
+        description: initialData?.name == "new" ? 
                   'Item was created successfully':
                   'Item was updated successfully'
       });
@@ -155,7 +161,7 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Cluster name"
+                      placeholder="Resource name"
                       {...field}
                     />
                   </FormControl>
@@ -170,7 +176,7 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
                 <FormItem>
                   <FormLabel>Manifest</FormLabel>
                   <FormControl>
-                    <Input
+                    <Textarea
                       disabled={loading}
                       placeholder="Resource Manifest"
                       {...field}
@@ -180,10 +186,14 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
                 </FormItem>
               )}
             />
-
-
-
           </div>
+
+          <CodeMirror
+      value={initialData?.manifest}
+      theme={vscodeDark}
+      height="500px"
+    />
+
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>
