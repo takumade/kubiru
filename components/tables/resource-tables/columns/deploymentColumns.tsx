@@ -1,8 +1,10 @@
 'use client';
 import { ColumnDef } from '@tanstack/react-table';
 
+import { Cluster } from '@/constants/data';
 import { Checkbox } from '@/components/ui/checkbox';
 import { CellAction } from '../cell-action';
+// import { CellAction } from './cell-action';
 
 export const DeploymentColumns: ColumnDef<any>[] = [
   {
@@ -55,6 +57,6 @@ export const DeploymentColumns: ColumnDef<any>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <CellAction data={row} />
+    cell: ({ row }) => <CellAction data={row.original} />
   }
 ];

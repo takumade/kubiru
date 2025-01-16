@@ -42,6 +42,6 @@ export const NamespaceColumns: ColumnDef<any>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <CellAction data={row} />
+    cell: ({ row }) => <CellAction data={row.original} />
   }
 ];
