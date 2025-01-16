@@ -38,7 +38,7 @@ type ResourceFormValues = z.infer<typeof formSchema>;
 
 interface ResourceFormProps {
   initialData: {
-    resourceId: number | string
+    resourceId:  string
   } | null;
 }
 
