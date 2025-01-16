@@ -3,6 +3,7 @@ import { ClusterForm } from '@/components/forms/cluster.form';
 import { ProductForm } from '@/components/forms/product-form';
 import { ResourceForm } from '@/components/forms/resource-form';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { getResourceDetails } from '@/repositories/k8Repository';
 import React from 'react';
 
 const breadcrumbItems = [
@@ -14,10 +15,17 @@ const breadcrumbItems = [
 export default function Page({
     params
 }: {
-    params: { resourceId: string }
+    params: { 
+      resource: string
+      resourceId: string }
 }): React.JSX.Element {
 
     console.log("params: ", params)
+    
+
+    getResourceDetails(params.resource, params.resourceId)
+
+    
   return (
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 p-8">
