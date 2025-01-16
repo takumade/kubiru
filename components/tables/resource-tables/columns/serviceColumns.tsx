@@ -51,6 +51,6 @@ export const ServiceColumns: ColumnDef<any>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <CellAction data={row.original} />
+    cell: ({ row }) => <CellAction data={row} />
   }
 ];
