@@ -4,6 +4,7 @@ import { ProductForm } from '@/components/forms/product-form';
 import { ResourceForm } from '@/components/forms/resource-form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { getResourceDetails } from '@/repositories/k8Repository';
+import { ResourceDetails } from '@/types';
 import React from 'react';
 
 const breadcrumbItems = [
@@ -12,18 +13,28 @@ const breadcrumbItems = [
   { title: 'Edit', link: '/dashboard/resources/edit' }
 ];
 
-export default function Page({
-    params
+export default async function Page({
+    params,
+    searchParams
 }: {
-    params: { 
-      resource: string
-      resourceId: string }
-}): React.JSX.Element {
+    params: { resourceId: string }
+    searchParams: { type: string, namespace: string }
+}): Promise<React.JSX.Element> {
 
     console.log("params: ", params)
     
+    let resourceType = searchParams.type 
 
-    getResourceDetails(params.resource, params.resourceId)
+    let details: ResourceDetails = {
+      resource_type: searchParams.type,
+      namespace: searchParams.namespace, 
+      resource_name: params.resourceId
+    }
+
+    let response = await getResourceDetails(details)
+
+
+    console.log("Result: ", response)
 
     
   return (
