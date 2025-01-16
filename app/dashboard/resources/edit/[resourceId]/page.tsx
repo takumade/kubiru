@@ -1,6 +1,4 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { ClusterForm } from '@/components/forms/cluster.form';
-import { ProductForm } from '@/components/forms/product-form';
 import { ResourceForm } from '@/components/forms/resource-form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { getResourceDetails } from '@/repositories/k8Repository';
@@ -23,7 +21,6 @@ export default async function Page({
 
     console.log("params: ", params)
     
-    let resourceType = searchParams.type 
 
     let details: ResourceDetails = {
       resource_type: searchParams.type,
@@ -33,16 +30,15 @@ export default async function Page({
 
     let response = await getResourceDetails(details)
 
-
-    console.log("Result: ", response)
-
-    
   return (
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 p-8">
         <Breadcrumbs items={breadcrumbItems} />
         <ResourceForm
-          initialData={params}
+          initialData={{
+            name: params.resourceId, 
+            manifest: JSON.stringify(response)
+          }}
           key={null}
         />
       </div>
