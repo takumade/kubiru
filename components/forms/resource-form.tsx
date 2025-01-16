@@ -7,6 +7,10 @@ import { Trash } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+
+import CodeMirror from "@uiw/react-codemirror";
+import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+
 import {
   Form,
   FormControl,
@@ -18,20 +22,9 @@ import {
 } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { Heading } from '@/components/ui/heading';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-// import FileUpload from "@/components/FileUpload";
 import { useToast } from '../ui/use-toast';
 import { createCluster, updateCluster } from '@/repositories/clusterRepository';
 
-
-import { useSelector } from 'react-redux';
 import { Textarea } from '../ui/textarea';
 
 
@@ -39,23 +32,18 @@ export const IMG_MAX_LIMIT = 3;
 const formSchema = z.object({
   name: z
     .string()
-    .min(3, { message: 'Cluster Name must be at least 3 characters' }),
-  api: z
+    .min(3, { message: 'Resource must be at least 3 characters' }),
+  manifest: z
     .string()
-    .min(3, { message: 'API must be at least 3 characters' }),
-  token: z
-    .string()
-    .min(3, { message: 'API Token must be at least 3 characters' }),    
-  description: z
-    .string()
-    .min(3, { message: 'Cluster description must be at least 3 characters' }),
+    .min(3, { message: 'Resource Manifest must be at least 3 characters' }),
 });
 
 type ResourceFormValues = z.infer<typeof formSchema>;
 
 interface ResourceFormProps {
   initialData: {
-    resourceId: number | string
+    name:string
+    manifest:string
   } | null;
 }
 
@@ -64,36 +52,21 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
 }: ResourceFormProps) => {
 
 
-
-
-  const clusters = useSelector((state: any) => state.cluster.clusters);
-  const currentCluster = clusters.find((cluster: any) => cluster.id == initialData?.clusterId)
-
-
-  console.log("Current Cluster: ", currentCluster)
-  console.log("Intial Data: ", initialData)
   const defaultValues = initialData
-    ? {
-        name: currentCluster?.name || '',
-        api: currentCluster?.api || '',
-        token: currentCluster?.token || '',
-        description: currentCluster?.description || '',
-      }
+    ? initialData
     : {
-        name: 'mooo',
-        api: '',
-        token: '',
-        description: '',
-      };
+        name: "",
+        manifest: ""
+    };
 
   const params = useParams();
   const router = useRouter();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const title = initialData ? 'Edit cluster' : 'Create cluster';
-  const description = initialData ? 'Edit a cluster.' : 'Add a new cluster';
-  const toastMessage = initialData ? 'Cluster updated.' : 'Cluster created.';
+  const title = initialData ? 'Edit resource' : 'Create resource';
+  const description = initialData ? 'Edit a resource.' : 'Add a new resource';
+  const toastMessage = initialData ? 'Resource updated.' : 'Resource created.';
   const action = initialData ? 'Save changes' : 'Create';
 
   const form = useForm<ResourceFormValues>({
@@ -108,11 +81,11 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
     
 
       setLoading(true);
-      if (initialData?.resourceId === "new") {
-        let res = await createCluster(data)      
-      } else {
-        let res = await updateCluster(initialData?.resourceId as number, data)
-      }
+    //   if (initialData?.resourceId === "new") {
+    //     let res = await createCluster(data)      
+    //   } else {
+    //     let res = await updateCluster(initialData?.resourceId as number, data)
+    //   }
 
 
       router.refresh();
@@ -120,7 +93,7 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
       toast({
         variant: 'success',
         title: 'Success',
-        description: initialData?.resourceId == "new" ? 
+        description: initialData?.name == "new" ? 
                   'Item was created successfully':
                   'Item was updated successfully'
       });
@@ -188,7 +161,7 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
                   <FormControl>
                     <Input
                       disabled={loading}
-                      placeholder="Cluster name"
+                      placeholder="Resource name"
                       {...field}
                     />
                   </FormControl>
@@ -198,52 +171,14 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="api"
+              name="manifest"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>API</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Cluster API"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Cluster description"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-
-          </div>
-
-          <FormField
-              control={form.control}
-              name="token"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Token</FormLabel>
+                  <FormLabel>Manifest</FormLabel>
                   <FormControl>
                     <Textarea
                       disabled={loading}
-                      placeholder="Cluster token"
+                      placeholder="Resource Manifest"
                       {...field}
                     />
                   </FormControl>
@@ -251,8 +186,14 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
                 </FormItem>
               )}
             />
+          </div>
 
-            
+          <CodeMirror
+      value={initialData?.manifest}
+      theme={vscodeDark}
+      height="500px"
+    />
+
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>

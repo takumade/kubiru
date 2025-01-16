@@ -53,7 +53,14 @@ export interface Service {
   clusterIP: string 
 }
 
+export interface ResourceDetails {
+  resource_type: string 
+  namespace: string 
+  resource_name: string
+}
+
 
 export type MainNavItem = NavItemWithOptionalChildren;
 
 export type SidebarNavItem = NavItemWithChildren;
+

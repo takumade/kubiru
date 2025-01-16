@@ -4,6 +4,7 @@ import fetch from 'node-fetch'
 import https from 'https'
 import { cookies } from 'next/headers'
 import { Cluster } from '@/database/entities'
+import { ResourceDetails } from '@/types'
 
 
 function generateHeaders(k8s_token:string) {
@@ -106,19 +107,24 @@ export async function getResource(resource:string, api_type: string="api_v1" ) {
     return []
 }
 
-export async function getResourceDetails(resource:string, api_type: string="api_v1" ) {
+
+
+export async function getResourceDetails(details: ResourceDetails, api_type: string="api_v1" ) {
     const {
         cluster,
-        namespace, 
         headers
     } = await getRequestDetails()
 
-    let apiVersion =  getResourceAPIPath(resource)
-    let resourceUrl = `${cluster.api}/${apiVersion}/${resource}`
+    const {
+        resource_type,
+        namespace,
+        resource_name
+    } = details
 
-    if (namespace) {
-        resourceUrl = `${cluster.api}/${apiVersion}/namespaces/${namespace}/${resource}/${resource}`
-    }
+    let apiVersion =  getResourceAPIPath(resource_type, api_type)
+
+    let resourceUrl = `${cluster.api}/${apiVersion}/namespaces/${namespace}/${resource_type}/${resource_name}`
+    
 
     console.log("Resource URLs: ", resourceUrl)
 

@@ -2,6 +2,7 @@ import { ResourceItems, Service, ServiceRaw } from "@/types"
 
 function formatNodes(data: ResourceItems[] ){
     return data.map((node:ResourceItems) => ({
+        resource: "nodes",
         original: node.metadata?.uid,
         name: node.metadata.name,
         status: node?.status?.conditions[node.status.conditions.length - 1].type,
@@ -11,6 +12,7 @@ function formatNodes(data: ResourceItems[] ){
 
 function formatPods(data: ResourceItems[]) {
     return data.map((pod: ResourceItems) => ({
+        resource: "pods",
         original: pod.metadata?.uid,
         name: pod.metadata?.name,
         namespace: pod.metadata?.namespace,
@@ -25,6 +27,7 @@ function formatPods(data: ResourceItems[]) {
 
 function formatDeployments(data: ResourceItems[]) {
     return data.map((deployment: ResourceItems) => ({
+        resource: "deployments",
         original: deployment.metadata?.uid,
         name: deployment.metadata?.name,
         namespace: deployment.metadata?.namespace,
@@ -37,6 +40,7 @@ function formatDeployments(data: ResourceItems[]) {
 
 function formatVolumes(data: ResourceItems[]) {
     return data.map((volume: ResourceItems) => ({
+        resource: "persistentvolumes",
         original: volume.metadata?.uid,
         name: volume.metadata?.name,
         capacity: volume.spec?.capacity?.storage,
@@ -50,6 +54,7 @@ function formatVolumes(data: ResourceItems[]) {
 
 function formatNamespaces(data: ResourceItems[]) {
     return data.map((namespace: ResourceItems) => ({
+        resource: "namespaces",
         original: namespace.metadata?.uid,
         uid: namespace.metadata?.uid,
         name: namespace.metadata?.name,
@@ -61,6 +66,7 @@ function formatNamespaces(data: ResourceItems[]) {
 
 function formatServices(data: ResourceItems[]) {
     return data.map((service: ResourceItems) => ({
+        resource: "services",
         original: service.metadata?.uid,
         name: service.metadata?.name,
         namespace: service.metadata?.namespace,
