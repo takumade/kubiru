@@ -18,20 +18,9 @@ import {
 } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { Heading } from '@/components/ui/heading';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-// import FileUpload from "@/components/FileUpload";
 import { useToast } from '../ui/use-toast';
 import { createCluster, updateCluster } from '@/repositories/clusterRepository';
 
-
-import { useSelector } from 'react-redux';
 import { Textarea } from '../ui/textarea';
 
 
@@ -65,26 +54,10 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
 
 
 
-
-  const clusters = useSelector((state: any) => state.cluster.clusters);
-  const currentCluster = clusters.find((cluster: any) => cluster.id == initialData?.clusterId)
-
-
-  console.log("Current Cluster: ", currentCluster)
   console.log("Intial Data: ", initialData)
   const defaultValues = initialData
-    ? {
-        name: currentCluster?.name || '',
-        api: currentCluster?.api || '',
-        token: currentCluster?.token || '',
-        description: currentCluster?.description || '',
-      }
-    : {
-        name: 'mooo',
-        api: '',
-        token: '',
-        description: '',
-      };
+    ? initialData
+    : {};
 
   const params = useParams();
   const router = useRouter();
