@@ -245,6 +245,7 @@ export const ClusterForm: React.FC<ClusterFormProps> = ({
                       disabled={loading}
                       placeholder="Cluster token"
                       {...field}
+                      rows={9}
                     />
                   </FormControl>
                   <FormMessage />
