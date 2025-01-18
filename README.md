@@ -79,11 +79,11 @@ Query resource types
 - [x] Services
 
 Edit resource types
-- [ ] Deployments
-- [ ] Pods
-- [ ] Volumes
-- [ ] Namespaces
-- [ ] Services
+- [x] Deployments
+- [x] Pods
+- [x] Volumes
+- [x] Namespaces
+- [x] Services
 
 Delete resource types
 - [ ] Deployments
