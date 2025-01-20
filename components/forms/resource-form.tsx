@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 
 import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+import { EditorView } from "@codemirror/view"
 
 import {
   Form,
@@ -169,7 +170,7 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
                 </FormItem>
               )}}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="manifest"
               render={({ field }) => (
@@ -185,14 +186,27 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
 
-          <CodeMirror
+         <div className="gap-8 grid grid-cols">
+         <CodeMirror
       value={initialData?.manifest}
       theme={vscodeDark}
       height="500px"
+      width='100%'
+
+      extensions={[EditorView.lineWrapping]}
+      
+
+      //@ts-ignore
+      options={{
+        mode: "json",
+        foldGutter: true,
+        lineWrapping: true,
+      }}
     />
+         </div>
 
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
