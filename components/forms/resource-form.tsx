@@ -124,6 +124,11 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
     }
   };
 
+  const convertToJSON = (yaml:string) => {
+    let result = YAML.parse(yaml);
+    console.log(result);
+  }
+
 
 
   const convertToYAML = (json:string) => {
@@ -201,7 +206,7 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
           </div>
 
           <div>
-          <Button  className="ml-auto" type="submit">
+          <Button  onClick={() => convertToJSON(initialData?.manifest as string)} className="ml-auto" type="submit">
             JSON
           </Button>
 
