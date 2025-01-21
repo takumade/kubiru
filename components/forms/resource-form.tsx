@@ -189,6 +189,16 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
             /> */}
           </div>
 
+          <div>
+          <Button  className="ml-auto" type="submit">
+            JSON
+          </Button>
+
+          <Button className="ml-auto" type="submit">
+            YAML
+          </Button>
+          </div>
+
          <div className="gap-8 grid grid-cols">
          <CodeMirror
       value={initialData?.manifest}
