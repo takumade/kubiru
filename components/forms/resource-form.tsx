@@ -12,6 +12,8 @@ import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { EditorView } from "@codemirror/view"
 
+import YAML from "yaml"
+
 import {
   Form,
   FormControl,
@@ -123,6 +125,15 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
   };
 
 
+
+  const convertToYAML = (json:string) => {
+    const doc = new YAML.Document();
+    doc.contents = JSON.parse(json);
+    
+    console.log(doc.toString());
+  }
+
+
   return (
     <React.Fragment>
       {/* <AlertModal
@@ -194,7 +205,7 @@ export const ResourceForm: React.FC<ResourceFormProps> = ({
             JSON
           </Button>
 
-          <Button className="ml-auto" type="submit">
+          <Button onClick={() => convertToYAML(initialData?.manifest as string)} className="ml-auto" type="submit">
             YAML
           </Button>
           </div>
