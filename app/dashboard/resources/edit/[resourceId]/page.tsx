@@ -37,7 +37,7 @@ export default async function Page({
         <ResourceForm
           initialData={{
             name: params.resourceId, 
-            manifest: JSON.stringify(response)
+            manifest: JSON.stringify(response, null, 4)
           }}
           key={null}
         />
